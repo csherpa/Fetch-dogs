@@ -2,7 +2,7 @@ import axios from "axios";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
-export const exampleRouter = createTRPCRouter({
+export const authRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
@@ -24,6 +24,7 @@ export const exampleRouter = createTRPCRouter({
       if (res?.headers?.["set-cookie"]) {
         ctx.res.setHeader("set-cookie", res.headers["set-cookie"]);
       }
+
       return { data: res.data };
     }),
 });

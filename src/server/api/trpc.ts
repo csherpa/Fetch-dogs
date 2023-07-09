@@ -7,7 +7,7 @@
  * need to use are documented accordingly near the end.
  */
 
-import { initTRPC } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
@@ -92,3 +92,17 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+export const middleware = t.middleware;
+
+export const isAuthenticated = middleware(async (opts) => {
+  const { ctx } = opts;
+
+  if (!ctx.req.cookies["fetch-access-token"]) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return opts.next({
+    ctx: {
+      cookie: ctx.req.cookies["fetch-access-token"],
+    },
+  });
+});

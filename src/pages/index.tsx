@@ -2,11 +2,14 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  const login = api.example.login.useMutation();
+  const hello = api.auth.hello.useQuery({ text: "from tRPC" });
+  const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
   };
+
+  const getDogs = api.dogs.breeds.useQuery();
+  // console.log("dataaa", getDogs.data);
 
   return (
     <>
