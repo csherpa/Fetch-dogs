@@ -1,23 +1,19 @@
 import Head from "next/head";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const hello = api.auth.hello.useQuery({ text: "from tRPC" });
+  const router = useRouter();
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
   };
 
   const getDogBreeds = api.dogs.breeds.useQuery();
-  console.log(getDogBreeds.data, "breedsData");
+  // console.log(getDogBreeds.data, "breedsData");
+
   const searchDogs = api.dogs.searchDogs.useQuery({ breeds: [] });
   console.log(searchDogs.data, "searchDogs");
-
-  const getDogsId = api.dogs.dogInfoObj.useQuery({
-    id: ["UXGFTIcBOvEgQ5OCx5kh"],
-  });
-
-  console.log(getDogsId.data);
 
   return (
     <>
@@ -91,9 +87,6 @@ export default function Home() {
               </form>
             </div>
           </div>
-          <p className="text-2xl text-white">
-            {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-          </p>
         </div>
       </main>
     </>

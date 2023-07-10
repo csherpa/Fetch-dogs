@@ -9,23 +9,6 @@ import {
 const basePath = "https://frontend-take-home-service.fetch.com";
 
 export const dogsRouter = createTRPCRouter({
-  dogInfoObj: publicProcedure
-    .use(isAuthenticated)
-    .input(z.object({ id: z.string().array() }))
-    .query(async ({ input, ctx }) => {
-      const res = await axios({
-        method: "post",
-        url: `${basePath}/dogs`,
-        data: {
-          id: input.id,
-        },
-        headers: {
-          Cookie: `fetch-access-token=${ctx.cookie}`,
-        },
-      });
-      // console.log(res.data);
-      return { data: res.data };
-    }),
   breeds: publicProcedure.use(isAuthenticated).query(async ({ ctx }) => {
     const res = await axios({
       method: "get",
@@ -36,6 +19,7 @@ export const dogsRouter = createTRPCRouter({
     });
     return { data: res.data };
   }),
+
   searchDogs: publicProcedure
     .use(isAuthenticated)
     .input(
@@ -54,7 +38,16 @@ export const dogsRouter = createTRPCRouter({
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
       });
-      // console.log(res.data);
-      return { data: res.data };
+
+      const dogObj = await axios({
+        method: "post",
+        url: `${basePath}/dogs`,
+        data: res?.data?.resultIds,
+        headers: {
+          Cookie: `fetch-access-token=${ctx.cookie}`,
+        },
+      });
+      console.log(dogObj.data);
+      return { data: dogObj.data };
     }),
 });
