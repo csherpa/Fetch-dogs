@@ -10,10 +10,11 @@ export default function Home() {
   };
 
   const getDogBreeds = api.dogs.breeds.useQuery();
-  // console.log(getDogBreeds.data, "breedsData");
+  console.log(getDogBreeds.data, "breedsData");
 
-  const searchDogs = api.dogs.searchDogs.useQuery({ breeds: [] });
-  console.log(searchDogs.data, "searchDogs");
+  const searchDogs = api.dogs.searchDogs.useQuery({ breeds: [] }).data;
+  console.log(searchDogs?.data, "searchDogs");
+  console.log(searchDogs?.matchdata, "searchDogs");
 
   return (
     <>

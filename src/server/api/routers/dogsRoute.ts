@@ -1,16 +1,18 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
   isAuthenticated,
 } from "~/server/api/trpc";
+import { type Dog } from "../models/dogs";
+import { type Match } from "../models/match";
 
 const basePath = "https://frontend-take-home-service.fetch.com";
 
 export const dogsRouter = createTRPCRouter({
   breeds: publicProcedure.use(isAuthenticated).query(async ({ ctx }) => {
-    const res = await axios({
+    const res: AxiosResponse<Response> = await axios({
       method: "get",
       url: `${basePath}/dogs/breeds`,
       headers: {
@@ -42,12 +44,25 @@ export const dogsRouter = createTRPCRouter({
       const dogObj = await axios({
         method: "post",
         url: `${basePath}/dogs`,
-        data: res?.data?.resultIds,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        data: res.data.resultIds,
         headers: {
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
       });
-      console.log(dogObj.data);
-      return { data: dogObj.data };
+
+      const matchDog: AxiosResponse<Response> = await axios({
+        method: "post",
+        url: `${basePath}/dogs/match`,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        data: res.data.resultIds,
+        headers: {
+          Cookie: `fetch-access-token=${ctx.cookie}`,
+        },
+      });
+      return {
+        data: dogObj.data as Dog,
+        matchdata: matchDog.data as unknown as Match,
+      };
     }),
 });
