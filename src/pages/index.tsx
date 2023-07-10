@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
+  const allZipArr: unknown[] = [];
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
@@ -12,10 +16,31 @@ export default function Home() {
   const getDogBreeds = api.dogs.breeds.useQuery();
   console.log(getDogBreeds.data, "breedsData");
 
-  const searchDogs = api.dogs.searchDogs.useQuery({ breeds: [] }).data;
+  const searchDogs = api.dogs.searchDogs.useQuery({ breeds: ["Pug"] }).data;
   console.log(searchDogs?.data, "searchDogs");
   console.log(searchDogs?.matchdata, "searchDogs");
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const zipCodes = searchDogs?.data.forEach((val: any) => {
+    // console.log(val.zip_code);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    allZipArr.push(val.zip_code);
+  });
+  const locations = api.location.location.useQuery({ zip_codes: allZipArr });
+  console.log(locations.data);
+  // const matchDog = () => {
+  //   axios({
+  //     method: "POST",
+  //     url: "https://frontend-take-home-service.fetch.com/dogs/match",
+  //     body: dogIds,
+  //   }).then(({ data }) => {
+  //     console.log(data, "data");
+  //   });
+  // };
+
+  useEffect(() => {
+    console.log(zipCodes);
+  }, [zipCodes]);
   return (
     <>
       <Head>
