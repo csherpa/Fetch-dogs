@@ -6,7 +6,9 @@ import DogCard from "./DogCard";
 const DogResults: React.FC = () => {
   const [moreDogs, setmoreDogs] = useState([] as Dog[]);
 
-  const searchDogs = api.dogs.searchDogs.useQuery({ breeds: [] }).data;
+  const searchDogs = api.dogs.searchDogs.useQuery({
+    breeds: [],
+  }).data;
   // console.log(searchDogs?.data, "searchDogs");
   useEffect(() => setmoreDogs(searchDogs?.data), [searchDogs?.data]);
 
