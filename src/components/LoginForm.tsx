@@ -1,17 +1,12 @@
 import router from "next/router";
 import { api } from "~/utils/api";
 
-interface LoginFormProps {
-  redirectUrl?: string;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ redirectUrl }) => {
-  // console.log({ redirectUrl });
+const LoginForm: React.FC = ({}) => {
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
+    router.push("/dogs");
   };
-
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
       <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
@@ -25,12 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ redirectUrl }) => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleLogin}
-          >
+          <form className="space-y-6" method="POST">
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -73,8 +63,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ redirectUrl }) => {
             <div>
               <button
                 type="button"
-                // onClick={handleLogin}
-                onClick={() => router.push("/dogs")}
+                onClick={handleLogin}
+                // onClick={() => router.push(`/dogs`)}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in

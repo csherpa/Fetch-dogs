@@ -7,7 +7,7 @@ import LoginForm from "~/components/LoginForm";
 export default function Home() {
   const router = useRouter();
   // console.log(router, "Query");
-  const redirectUrl = `/dogs`;
+  // const redirectUrl = `/dogs`;
   // const allZipArr: unknown[] = [];
 
   // const getDogBreeds = api.dogs.breeds.useQuery();
@@ -44,7 +44,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <LoginForm redirectUrl={redirectUrl} />
+        <LoginForm />
       </main>
     </>
   );
