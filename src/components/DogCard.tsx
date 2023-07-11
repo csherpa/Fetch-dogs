@@ -1,30 +1,18 @@
-import Link from "next/link";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
+import { type Dog } from "~/server/api/models/dogs";
 
 interface DogCardProps {
-  dog: unknown;
+  dog: Dog;
 }
 
 const DogCard: React.FC<DogCardProps> = ({ dog }) => {
-  console.log({ dog });
   return (
     <section className="relative block cursor-pointer rounded-tl-[10px] rounded-tr-[10px] bg-white">
-      <section className="shadow-card relative rounded-[10px]">
-        {/* <Image
-          src={`${dog.img}`}
-          blurDataURL={`${dog.img}`}
-          layout="responsive"
-          loading="eager"
-          placeholder="blur"
-          width={600}
-          height={400}
-          alt=""
-          className="h-44 w-full rounded-tl-[10px] rounded-tr-[10px] object-cover"
-        /> */}
+      <section className="relative rounded-[10px]">
         <img
           className="h-44 w-full rounded-tl-[10px] rounded-tr-[10px] object-cover"
           src={`${dog.img}`}
-          alt="dogs"
+          alt="Picture of a Dog"
         />
         <section className="p-4">
           <h2 className="text-lg font-bold leading-6">Name: {dog.name}</h2>

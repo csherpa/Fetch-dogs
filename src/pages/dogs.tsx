@@ -1,5 +1,3 @@
-// interface DogsProps {}
-
 import Head from "next/head";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";

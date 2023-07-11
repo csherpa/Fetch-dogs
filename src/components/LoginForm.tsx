@@ -1,11 +1,12 @@
-import router from "next/router";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 
 const LoginForm: React.FC = ({}) => {
+  const router = useRouter();
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    router.push("/dogs");
+    void router.push("/dogs");
   };
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
@@ -64,7 +65,6 @@ const LoginForm: React.FC = ({}) => {
               <button
                 type="button"
                 onClick={handleLogin}
-                // onClick={() => router.push(`/dogs`)}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
