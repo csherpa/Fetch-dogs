@@ -9,12 +9,12 @@ import {
 export const locationRouter = createTRPCRouter({
   location: publicProcedure
     .use(isAuthenticated)
-    .input(z.object({ zip_codes: z.string().array() }))
+    .input(z.object({ locationObj: z.string().array() }))
     .query(async ({ input, ctx }) => {
       const res: AxiosResponse<Response> = await axios({
         method: "post",
         url: "https://frontend-take-home-service.fetch.com/location",
-        data: input.zip_codes,
+        data: input.locationObj,
         headers: {
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
