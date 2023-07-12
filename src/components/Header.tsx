@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 const Header: React.FC = () => {
   const router = useRouter();
   const handleLogout = () => {
-    console.log(window);
+    // console.log(window);
     void router.push("/");
   };
   return (

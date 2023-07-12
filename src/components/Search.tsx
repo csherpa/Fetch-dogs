@@ -10,7 +10,7 @@ const Search: React.FC = () => {
     setSelectedFilters(getDogBreeds?.data);
   }, [getDogBreeds?.data]);
 
-  console.log(selectedFilters, "breedsData");
+  // console.log(selectedFilters, "breedsData");
 
   return (
     <section>
