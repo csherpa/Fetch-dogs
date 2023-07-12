@@ -40,7 +40,6 @@ export const dogsRouter = createTRPCRouter({
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
       });
-
       const dogObj = await axios({
         method: "post",
         url: `${basePath}/dogs`,
@@ -61,8 +60,9 @@ export const dogsRouter = createTRPCRouter({
         },
       });
       return {
+        next: res.data.next,
         data: dogObj.data as Dog,
-        matchdata: matchDog.data as unknown as Match,
+        match: matchDog.data,
       };
     }),
 });

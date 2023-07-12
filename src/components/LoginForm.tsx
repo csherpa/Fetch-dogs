@@ -1,5 +1,5 @@
+import { useRouter } from "next/dist/client/router";
 import { api } from "~/utils/api";
-import { useRouter } from "next/router";
 
 const LoginForm: React.FC = ({}) => {
   const router = useRouter();
