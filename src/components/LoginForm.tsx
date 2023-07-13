@@ -1,12 +1,13 @@
-import { useRouter } from "next/dist/client/router";
+import myRouter from "~/lib/hooks/router";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
-  const router = useRouter();
+  const { updateRouter, router } = myRouter();
+  console.log({ router });
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    void router.push({
+    updateRouter({
       pathname: "/dogs/search",
       query: {
         size: 25,

@@ -3,6 +3,7 @@ import { Listbox } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
 const Search: React.FC = () => {
+  console.log(window.location);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const getDogBreeds = api.dogs.breeds.useQuery().data;
 
