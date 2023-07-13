@@ -10,8 +10,6 @@ const Search: React.FC = () => {
     setSelectedFilters(getDogBreeds?.data);
   }, [getDogBreeds?.data]);
 
-  // console.log(selectedFilters, "breedsData");
-
   return (
     <section>
       <Listbox value={selectedFilters} onChange={setSelectedFilters} multiple>

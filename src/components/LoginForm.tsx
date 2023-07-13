@@ -6,7 +6,13 @@ const LoginForm: React.FC = ({}) => {
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    void router.push("/dogs");
+    void router.push({
+      pathname: "/dogs/search",
+      query: {
+        size: 25,
+        from: 25,
+      },
+    });
   };
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

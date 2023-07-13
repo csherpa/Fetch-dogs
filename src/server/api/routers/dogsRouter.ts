@@ -60,8 +60,9 @@ export const dogsRouter = createTRPCRouter({
         },
       });
       return {
+        data: res.data,
         next: res.data.next,
-        data: dogObj.data as Dog,
+        dogObj: dogObj.data as Dog,
         match: matchDog.data,
       };
     }),

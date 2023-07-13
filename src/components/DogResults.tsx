@@ -9,10 +9,8 @@ const DogResults: React.FC = () => {
   const searchDogs = api.dogs.searchDogs.useQuery({
     breeds: [],
   }).data;
-  // console.log(searchDogs?.data, "searchDogs");
-  useEffect(() => setmoreDogs(searchDogs?.data), [searchDogs?.data]);
 
-  // console.log({ moreDogs });
+  useEffect(() => setmoreDogs(searchDogs?.dogObj), [searchDogs?.dogObj]);
   return (
     <section className="bg-off-gray py-4 md:py-16">
       <div className=" container relative mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 xl:grid-cols-4 2xl:grid-cols-4">
