@@ -1,10 +1,17 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";
 import Search from "~/components/Search";
+import { api } from "~/utils/api";
 
 const DogsPage: NextPage = () => {
+  const [selectedFilters, setSelectedFilters] = useState([] as string[]);
+  const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
+
+  console.log({ selectedFilters });
+  console.log({ getDogBreeds });
   return (
     <>
       <Head>
@@ -14,7 +21,11 @@ const DogsPage: NextPage = () => {
       </Head>
       <Header />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <Search />
+        <Search
+          selectedFilters={selectedFilters}
+          setSelectedFilters={setSelectedFilters}
+          getDogBreeds={getDogBreeds}
+        />
         <DogResults />
       </main>
     </>

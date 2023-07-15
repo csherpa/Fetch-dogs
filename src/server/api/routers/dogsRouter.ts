@@ -6,20 +6,19 @@ import {
   isAuthenticated,
 } from "~/server/api/trpc";
 import { type Dog } from "../models/dogs";
-import { type Match } from "../models/match";
 
 const basePath = "https://frontend-take-home-service.fetch.com";
 
 export const dogsRouter = createTRPCRouter({
   breeds: publicProcedure.use(isAuthenticated).query(async ({ ctx }) => {
-    const res: AxiosResponse<Response> = await axios({
+    const breedObj = await axios({
       method: "get",
       url: `${basePath}/dogs/breeds`,
       headers: {
         Cookie: `fetch-access-token=${ctx.cookie}`,
       },
     });
-    return { data: res.data };
+    return { breed: breedObj.data };
   }),
 
   searchDogs: publicProcedure

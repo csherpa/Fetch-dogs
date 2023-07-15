@@ -2,8 +2,7 @@ import myRouter from "~/lib/hooks/router";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
-  const { updateRouter, router } = myRouter();
-  console.log({ router });
+  const { updateRouter } = myRouter();
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
