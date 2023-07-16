@@ -1,18 +1,15 @@
-import myRouter from "~/lib/hooks/router";
+import { type Url } from "next/dist/shared/lib/router/router";
+import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
-  const { updateRouter } = myRouter();
+  const router = useRouter();
+  const updateUrl = api.dogs.searchDogs.useQuery({ breeds: [] }).data
+    ?.next as Url;
   const login = api.auth.login.useMutation();
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    updateRouter({
-      pathname: "/dogs/search",
-      query: {
-        size: 25,
-        from: 25,
-      },
-    });
+    void router.push(updateUrl);
   };
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

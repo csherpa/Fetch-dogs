@@ -1,17 +1,26 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";
 import Search from "~/components/Search";
+import { type Dog } from "~/server/api/models/dogs";
 import { api } from "~/utils/api";
 
 const DogsPage: NextPage = () => {
   const [selectedFilters, setSelectedFilters] = useState([] as string[]);
+
   const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
 
+  const searchDogs = api.dogs.searchDogs.useQuery({
+    breeds: [],
+  }).data?.dogObj as unknown as Dog[];
+
+  const clearSelectedFilters = () => {
+    setSelectedFilters([]);
+  };
+
   console.log({ selectedFilters });
-  console.log({ getDogBreeds });
   return (
     <>
       <Head>
@@ -25,8 +34,9 @@ const DogsPage: NextPage = () => {
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
           getDogBreeds={getDogBreeds}
+          clearSelectedFilters={clearSelectedFilters}
         />
-        <DogResults />
+        <DogResults searchDogs={searchDogs} />
       </main>
     </>
   );

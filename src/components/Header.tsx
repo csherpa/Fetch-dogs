@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 
 const Header: React.FC = () => {
   const router = useRouter();
