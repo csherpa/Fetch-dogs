@@ -1,11 +1,10 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { useCallback, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";
 import Search from "~/components/Search";
-import { api } from "~/utils/api";
 import { useSearchParams } from "next/navigation";
 
 const DogsPage: NextPage = () => {
@@ -13,13 +12,12 @@ const DogsPage: NextPage = () => {
 
   const searchParams = useSearchParams();
 
-  const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
-
   const current = useMemo(
     () => new URLSearchParams(searchParams.toString()),
     [searchParams]
   );
   const getparams = searchParams.get("breeds") ?? "";
+
   const selectedFilters = getparams
     .split("_")
     .filter((val: string) => val != "");
@@ -48,7 +46,6 @@ const DogsPage: NextPage = () => {
         <Search
           selectedFilters={selectedFilters}
           onHandleChange={onHandleChange}
-          getDogBreeds={getDogBreeds}
           clearSelectedFilters={clearSelectedFilters}
         />
         <DogResults selectedFilters={selectedFilters} />

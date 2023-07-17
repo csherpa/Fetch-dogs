@@ -1,19 +1,19 @@
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
+import { api } from "~/utils/api";
 
 interface SearchProps {
   selectedFilters: string[];
   onHandleChange: (selectedFilter: string[]) => void;
-  getDogBreeds: string[];
   clearSelectedFilters: () => void;
 }
 
 const Search: React.FC<SearchProps> = ({
   selectedFilters,
   onHandleChange,
-  getDogBreeds,
   clearSelectedFilters,
 }) => {
+  const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
   return (
     <section>
       <Listbox value={selectedFilters} onChange={onHandleChange} multiple>
