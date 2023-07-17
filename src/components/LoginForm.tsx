@@ -1,16 +1,22 @@
-import { type Url } from "next/dist/shared/lib/router/router";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
   const router = useRouter();
-  const updateUrl = api.dogs.searchDogs.useQuery({ breeds: [] }).data
-    ?.next as Url;
+
   const login = api.auth.login.useMutation();
+
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    void router.push(updateUrl);
+    void router.push({
+      pathname: "/dogs/search",
+      query: {
+        size: "25",
+        from: "25",
+      },
+    });
   };
+
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
       <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">

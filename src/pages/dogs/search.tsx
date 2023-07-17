@@ -1,26 +1,41 @@
 import { type NextPage } from "next";
+import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";
 import Search from "~/components/Search";
-import { type Dog } from "~/server/api/models/dogs";
 import { api } from "~/utils/api";
+import { useSearchParams } from "next/navigation";
 
 const DogsPage: NextPage = () => {
-  const [selectedFilters, setSelectedFilters] = useState([] as string[]);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
 
   const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
 
-  const searchDogs = api.dogs.searchDogs.useQuery({
-    breeds: [],
-  }).data?.dogObj as unknown as Dog[];
+  const current = useMemo(
+    () => new URLSearchParams(searchParams.toString()),
+    [searchParams]
+  );
+  const getparams = searchParams.get("breeds") ?? "";
+  const selectedFilters = getparams
+    .split("_")
+    .filter((val: string) => val != "");
 
   const clearSelectedFilters = () => {
-    setSelectedFilters([]);
+    current.delete("breeds");
+    const deletedBreeds = `${router.pathname}?${current.toString()}`;
+    void router.push(deletedBreeds, undefined, { shallow: true });
   };
 
-  console.log({ selectedFilters });
+  const onHandleChange = (selectedFilters: string[]) => {
+    current.set("breeds", selectedFilters.join("_"));
+    const newUrl = `${router.pathname}?${current.toString()}`;
+    void router.push(newUrl, undefined, { shallow: true });
+  };
+
   return (
     <>
       <Head>
@@ -32,11 +47,11 @@ const DogsPage: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <Search
           selectedFilters={selectedFilters}
-          setSelectedFilters={setSelectedFilters}
+          onHandleChange={onHandleChange}
           getDogBreeds={getDogBreeds}
           clearSelectedFilters={clearSelectedFilters}
         />
-        <DogResults searchDogs={searchDogs} />
+        <DogResults selectedFilters={selectedFilters} />
       </main>
     </>
   );
