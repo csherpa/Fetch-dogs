@@ -10,10 +10,6 @@ const LoginForm: React.FC = ({}) => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
     void router.push({
       pathname: "/dogs/search",
-      query: {
-        size: "25",
-        from: "25",
-      },
     });
   };
 

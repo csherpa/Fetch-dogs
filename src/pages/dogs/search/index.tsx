@@ -1,21 +1,19 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
-import { useMemo } from "react";
 import DogResults from "~/components/DogResults";
 import Header from "~/components/Header";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
+import MatchedResult from "~/components/MatchedResult";
 
 const DogsPage: NextPage = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
 
-  const current = useMemo(
-    () => new URLSearchParams(searchParams.toString()),
-    [searchParams]
-  );
+  const current = new URLSearchParams(searchParams.toString());
+
   const getparams = searchParams.get("breeds") ?? "";
 
   const selectedFilters = getparams
@@ -29,6 +27,8 @@ const DogsPage: NextPage = () => {
   };
 
   const onHandleChange = (selectedFilters: string[]) => {
+    current.set("size", "25");
+    current.set("from", "25");
     current.set("breeds", selectedFilters.join("_"));
     const newUrl = `${router.pathname}?${current.toString()}`;
     void router.push(newUrl, undefined, { shallow: true });
@@ -48,7 +48,9 @@ const DogsPage: NextPage = () => {
           onHandleChange={onHandleChange}
           clearSelectedFilters={clearSelectedFilters}
         />
+        <MatchedResult selectedFilters={selectedFilters} />
         <DogResults selectedFilters={selectedFilters} />
+        {router.pathname === "/dogs/search"}
       </main>
     </>
   );

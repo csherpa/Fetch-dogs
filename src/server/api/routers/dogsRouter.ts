@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 import { z } from "zod";
 import {
   createTRPCRouter,
@@ -6,6 +6,7 @@ import {
   isAuthenticated,
 } from "~/server/api/trpc";
 import { type Dog } from "../models/dogs";
+import { type Match } from "../models/match";
 
 const basePath = "https://frontend-take-home-service.fetch.com";
 
@@ -49,7 +50,7 @@ export const dogsRouter = createTRPCRouter({
         },
       });
 
-      const matchDog: AxiosResponse<Response> = await axios({
+      const matchDog = await axios({
         method: "post",
         url: `${basePath}/dogs/match`,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
@@ -62,7 +63,7 @@ export const dogsRouter = createTRPCRouter({
         data: res.data,
         next: res.data.next,
         dogObj: dogObj.data as Dog,
-        match: matchDog.data,
+        match: matchDog.data as Match,
       };
     }),
 });
