@@ -8,9 +8,7 @@ const LoginForm: React.FC = ({}) => {
 
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    void router.push({
-      pathname: "/dogs/search",
-    });
+    void router.push("dogs/search?from=0&size=20");
   };
 
   return (

@@ -19,13 +19,15 @@ export const dogsRouter = createTRPCRouter({
         Cookie: `fetch-access-token=${ctx.cookie}`,
       },
     });
-    return { breed: breedObj.data };
+    return { breeds: breedObj.data };
   }),
 
   searchDogs: publicProcedure
     .use(isAuthenticated)
     .input(
       z.object({
+        from: z.number().default(0),
+        size: z.number().nonnegative().default(20),
         breeds: z.string().array(),
       })
     )
@@ -34,6 +36,8 @@ export const dogsRouter = createTRPCRouter({
         method: "get",
         url: `${basePath}/dogs/search`,
         params: {
+          from: input.from,
+          size: input.size,
           breeds: input.breeds,
         },
         headers: {
@@ -59,9 +63,12 @@ export const dogsRouter = createTRPCRouter({
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
       });
+
       return {
         data: res.data,
         next: res.data.next,
+        prev: res.data.prev,
+        totalNumberOfResults: res.data.total,
         dogObj: dogObj.data as Dog,
         match: matchDog.data as Match,
       };

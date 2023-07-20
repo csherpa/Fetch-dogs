@@ -14,7 +14,7 @@ const Search: React.FC<SearchProps> = ({
   onHandleChange,
   clearSelectedFilters,
 }) => {
-  const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breed as string[];
+  const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breeds as string[];
   return (
     <section>
       <Listbox value={selectedFilters} onChange={onHandleChange} multiple>

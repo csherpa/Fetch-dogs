@@ -6,6 +6,7 @@ import Header from "~/components/Header";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
 import MatchedResult from "~/components/MatchedResult";
+import TablePagination from "~/components/Pagination";
 
 const DogsPage: NextPage = () => {
   const router = useRouter();
@@ -23,12 +24,10 @@ const DogsPage: NextPage = () => {
   const clearSelectedFilters = () => {
     current.delete("breeds");
     const deletedBreeds = `${router.pathname}?${current.toString()}`;
-    void router.push(deletedBreeds, undefined, { shallow: true });
+    void router.push(deletedBreeds);
   };
 
   const onHandleChange = (selectedFilters: string[]) => {
-    current.set("size", "25");
-    current.set("from", "25");
     current.set("breeds", selectedFilters.join("_"));
     const newUrl = `${router.pathname}?${current.toString()}`;
     void router.push(newUrl, undefined, { shallow: true });
@@ -48,9 +47,8 @@ const DogsPage: NextPage = () => {
           onHandleChange={onHandleChange}
           clearSelectedFilters={clearSelectedFilters}
         />
-        <MatchedResult selectedFilters={selectedFilters} />
-        <DogResults selectedFilters={selectedFilters} />
-        {router.pathname === "/dogs/search"}
+        {/* <MatchedResult selectedFilters={selectedFilters} /> */}
+        <DogResults selectedFilters={selectedFilters} current={current} />
       </main>
     </>
   );
