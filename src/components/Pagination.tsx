@@ -5,19 +5,21 @@ interface TablePaginationProps {
   selectedFilters: string[];
   loadPrevPage: () => void;
   loadNextPage: () => void;
-  searchDogs: Dog[];
   from: number;
+  size: number;
 }
 
 const TablePagination: React.FC<TablePaginationProps> = ({
   selectedFilters,
   loadPrevPage,
   loadNextPage,
-  searchDogs,
   from,
+  size,
 }) => {
   const totalNumber = api.dogs.searchDogs.useQuery({
     breeds: selectedFilters,
+    size: size,
+    from: from,
   }).data?.totalNumberOfResults as number;
 
   return (
@@ -39,14 +41,12 @@ const TablePagination: React.FC<TablePaginationProps> = ({
           >
             Prev
           </button>
-          {searchDogs && searchDogs.length >= 20 && (
-            <button
-              onClick={loadNextPage}
-              className="flex h-10 items-center justify-center rounded-r border-0 border-l border-gray-700 bg-gray-800 px-4 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              Next
-            </button>
-          )}
+          <button
+            onClick={loadNextPage}
+            className="flex h-10 items-center justify-center rounded-r border-0 border-l border-gray-700 bg-gray-800 px-4 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            Next
+          </button>
         </div>
       </div>
     </>

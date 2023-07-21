@@ -8,23 +8,32 @@ import { useState } from "react";
 interface DogResultsProps {
   selectedFilters: string[];
   current: URLSearchParams;
+  size: number;
 }
 const DogResults: React.FC<DogResultsProps> = ({
   selectedFilters,
   current,
+  size,
 }) => {
-  const [from, setFrom] = useState(0);
-
   const router = useRouter();
+
+  const [from, setFrom] = useState(0);
 
   const searchDogs = api.dogs.searchDogs.useQuery({
     breeds: selectedFilters,
     from: from,
-    size: Number(router.query.size),
+    size: size,
   }).data?.dogObj as unknown as Dog[];
 
+  const findMatch = api.dogs.searchDogs.useQuery({
+    breeds: selectedFilters,
+    from: from,
+    size: size,
+  }).data?.match;
+
   const loadNextPage = () => {
-    const nextDogs = Number(router.query.size) + from;
+    console.log({ size });
+    const nextDogs = size + from;
     setFrom(nextDogs);
     current.set("from", nextDogs.toString());
     const newUrl = `${router.pathname}?${current.toString()}`;
@@ -32,7 +41,8 @@ const DogResults: React.FC<DogResultsProps> = ({
   };
 
   const loadPrevPage = () => {
-    const prevDogs = from - Number(router.query.size);
+    console.log({ size });
+    const prevDogs = from - size;
     setFrom(prevDogs);
     current.set("from", prevDogs.toString());
     const prevUrl = `${router.pathname}?${current.toString()}`;
@@ -40,20 +50,45 @@ const DogResults: React.FC<DogResultsProps> = ({
   };
 
   return (
-    <section className="bg-off-gray py-4 md:py-16">
-      <div className=" container relative mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 xl:grid-cols-4 2xl:grid-cols-4">
-        {searchDogs?.map((dog: Dog) => (
-          <DogCard key={dog.id} dog={dog}></DogCard>
-        ))}
-      </div>
-      <TablePagination
-        selectedFilters={selectedFilters}
-        loadPrevPage={loadPrevPage}
-        loadNextPage={loadNextPage}
-        searchDogs={searchDogs}
-        from={from}
-      />
-    </section>
+    <>
+      {router.pathname === "dogs/match" ? (
+        <>
+          {/* {searchDogs.find((dogObj) => dogObj.id === findMatch?.match)} */}
+          {searchDogs.find((dog) => {
+            console.log({ dog });
+          })}
+        </>
+      ) : (
+        <section className="bg-off-gray py-4 md:py-16">
+          <div className=" container relative mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 xl:grid-cols-4 2xl:grid-cols-4">
+            {searchDogs?.map((dog: Dog) => (
+              <DogCard key={dog.id} dog={dog}></DogCard>
+            ))}
+          </div>
+          <TablePagination
+            selectedFilters={selectedFilters}
+            loadPrevPage={loadPrevPage}
+            loadNextPage={loadNextPage}
+            from={from}
+            size={size}
+          />
+        </section>
+      )}
+      {/* <section className="bg-off-gray py-4 md:py-16">
+        <div className=" container relative mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 xl:grid-cols-4 2xl:grid-cols-4">
+          {searchDogs?.map((dog: Dog) => (
+            <DogCard key={dog.id} dog={dog}></DogCard>
+          ))}
+        </div>
+        <TablePagination
+          selectedFilters={selectedFilters}
+          loadPrevPage={loadPrevPage}
+          loadNextPage={loadNextPage}
+          from={from}
+          size={size}
+        />
+      </section> */}
+    </>
   );
 };
 

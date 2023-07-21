@@ -26,8 +26,8 @@ export const dogsRouter = createTRPCRouter({
     .use(isAuthenticated)
     .input(
       z.object({
-        from: z.number().default(0),
-        size: z.number().nonnegative().default(20),
+        from: z.number().nonnegative(),
+        size: z.number(),
         breeds: z.string().array(),
       })
     )
