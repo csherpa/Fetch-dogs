@@ -1,4 +1,3 @@
-import { type Dog } from "~/server/api/models/dogs";
 import { api } from "~/utils/api";
 
 interface TablePaginationProps {
@@ -21,7 +20,6 @@ const TablePagination: React.FC<TablePaginationProps> = ({
     size: size,
     from: from,
   }).data?.totalNumberOfResults as number;
-
   return (
     <>
       <div className="flex flex-col items-center p-8">
@@ -35,15 +33,15 @@ const TablePagination: React.FC<TablePaginationProps> = ({
 
         <div className="xs:mt-0 mt-2 inline-flex">
           <button
-            disabled={from === 0}
+            disabled={from === 0 || from < size}
             onClick={loadPrevPage}
-            className="flex h-10 items-center justify-center rounded-l bg-gray-800 px-4 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="flex h-10 items-center justify-center rounded-l bg-gray-800 px-4 text-base font-medium text-white hover:bg-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >
             Prev
           </button>
           <button
             onClick={loadNextPage}
-            className="flex h-10 items-center justify-center rounded-r border-0 border-l border-gray-700 bg-gray-800 px-4 text-base font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="flex h-10 items-center justify-center rounded-r border-0 border-l border-gray-700 bg-gray-800 px-4 text-base font-medium text-white hover:bg-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >
             Next
           </button>

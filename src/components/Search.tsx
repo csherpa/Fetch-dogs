@@ -6,22 +6,17 @@ import { api } from "~/utils/api";
 interface SearchProps {
   selectedFilters: string[];
   onHandleChange: (selectedFilter: string[]) => void;
-  clearSelectedFilters: () => void;
 }
 
-const Search: React.FC<SearchProps> = ({
-  selectedFilters,
-  onHandleChange,
-  clearSelectedFilters,
-}) => {
+const Search: React.FC<SearchProps> = ({ selectedFilters, onHandleChange }) => {
   const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breeds as string[];
   return (
-    <section>
+    <>
       <Listbox value={selectedFilters} onChange={onHandleChange} multiple>
-        <Listbox.Button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <Listbox.Button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Search By Breed
         </Listbox.Button>
-        <Listbox.Options className="absolute z-10 cursor-pointer text-white">
+        <Listbox.Options className="absolute z-10 mr-80 mt-9 cursor-pointer text-white">
           <div className="max-h-80 overflow-y-scroll ">
             {getDogBreeds?.map((breed: string) => (
               <Listbox.Option key={breed} value={breed} as={Fragment}>
@@ -42,18 +37,13 @@ const Search: React.FC<SearchProps> = ({
           </div>
         </Listbox.Options>
       </Listbox>
-      <button
-        onClick={clearSelectedFilters}
-        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Clear Breeds
-      </button>
+
       <Link href={"/dogs/match"}>
-        <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Match with a Dog
         </button>
       </Link>
-    </section>
+    </>
   );
 };
 

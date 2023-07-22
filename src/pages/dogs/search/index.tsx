@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import DogResults from "~/components/DogResults";
-import Header from "~/components/Header";
+import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -43,13 +43,21 @@ const DogsPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <Header />
-        <Search
-          selectedFilters={selectedFilters}
-          onHandleChange={onHandleChange}
-          clearSelectedFilters={clearSelectedFilters}
-        />
-        <SizeDropdown size={size} setSize={setSize} current={current} />
+        <div className="mt-10 flex w-full justify-end gap-3 px-24">
+          <Search
+            selectedFilters={selectedFilters}
+            onHandleChange={onHandleChange}
+          />
+          <SizeDropdown size={size} setSize={setSize} current={current} />
+
+          <LogoutButton />
+        </div>
+        <button
+          onClick={clearSelectedFilters}
+          className="mt-6 flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Clear Breeds
+        </button>
         <DogResults
           selectedFilters={selectedFilters}
           current={current}
