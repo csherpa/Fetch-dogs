@@ -3,27 +3,38 @@ import DogCard from "./DogCard";
 import { api } from "~/utils/api";
 import TablePagination from "./Pagination";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 interface DogResultsProps {
   selectedFilters: string[];
+  searchDogs: Dog[];
   current: URLSearchParams;
   size: number;
+  from: number;
+  setFrom: Dispatch<SetStateAction<number>>;
 }
 const DogResults: React.FC<DogResultsProps> = ({
   selectedFilters,
+  searchDogs,
   current,
   size,
+  from,
+  setFrom,
 }) => {
   const router = useRouter();
 
-  const [from, setFrom] = useState(0);
+  // const [from, setFrom] = useState(0);
 
-  const searchDogs = api.dogs.searchDogs.useQuery({
-    breeds: selectedFilters,
-    from: from,
-    size: size,
-  }).data?.dogObj as unknown as Dog[];
+  // const searchDogs = api.dogs.searchDogs.useQuery({
+  //   breeds: selectedFilters,
+  //   from: from,
+  //   size: size,
+  // }).data?.dogObj as unknown as Dog[];
+
+  // if (searchDogs) {
+  //   const ageSort = searchDogs.sort((a, b) => a.breed.localeCompare(b.breed));
+  //   console.log({ ageSort });
+  // }
 
   const findMatch = api.dogs.searchDogs.useQuery({
     breeds: selectedFilters,

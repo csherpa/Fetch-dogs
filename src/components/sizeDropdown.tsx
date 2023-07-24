@@ -15,7 +15,6 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({
   const router = useRouter();
 
   const handleSelectChange = (event: { target: { value: unknown } }) => {
-    console.log("here");
     const selectedSize = Number(event.target.value);
     setSize(selectedSize);
     current.set("size", selectedSize.toString());
