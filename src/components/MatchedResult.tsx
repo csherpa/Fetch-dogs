@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type Dog } from "~/server/api/models/dogs";
 import { api } from "~/utils/api";
 import DogCard from "./DogCard";

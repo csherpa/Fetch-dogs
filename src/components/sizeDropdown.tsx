@@ -1,44 +1,50 @@
-import { useRouter } from "next/dist/client/router";
-import { type Dispatch, type SetStateAction } from "react";
+import { Listbox } from "@headlessui/react";
 
 interface SizeDropdownProps {
-  size: number;
-  setSize: Dispatch<SetStateAction<number>>;
   current: URLSearchParams;
+  getSize: string;
+  handleSelectChange: (value: number) => void;
 }
 
-const SizeDropdown: React.FC<SizeDropdownProps> = ({
-  size,
-  setSize,
-  current,
-}) => {
-  const router = useRouter();
+const sizeOptions = [
+  { value: "10", label: "10" },
+  { value: "20", label: "20" },
+  { value: "40", label: "40" },
+];
 
-  const handleSelectChange = (event: { target: { value: unknown } }) => {
-    const selectedSize = Number(event.target.value);
-    setSize(selectedSize);
-    current.set("size", selectedSize.toString());
-    const sizeQueryUrl = `${router.pathname}?${current.toString()}`;
-    void router.push(sizeQueryUrl);
-  };
+const SizeDropdown: React.FC<SizeDropdownProps> = ({
+  handleSelectChange,
+  getSize,
+}) => {
+  const size = Number(getSize);
 
   return (
-    <div>
-      <select
-        id="size"
-        name="size"
-        defaultValue={size ? `Selected Size: ${size}` : "Select Size"}
-        onChange={handleSelectChange}
-        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        <option value="" className="text-white">
-          Selected Size: {size}
-        </option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="40">40</option>
-      </select>
-    </div>
+    <>
+      <div>
+        <Listbox value={size} onChange={handleSelectChange}>
+          <Listbox.Button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">
+            Selected Size: {size}
+          </Listbox.Button>
+          <Listbox.Options className="absolute z-10 mt-2 w-40 rounded border border-gray-300 bg-white py-2 shadow-lg">
+            {sizeOptions.map((option) => (
+              <Listbox.Option key={option.value} value={option.value}>
+                {({ active }) => (
+                  <li
+                    className={`relative cursor-pointer select-none px-4 py-2 ${
+                      active
+                        ? "bg-indigo-600 text-white"
+                        : "bg-white text-black"
+                    }`}
+                  >
+                    {option.label}
+                  </li>
+                )}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </Listbox>
+      </div>
+    </>
   );
 };
 

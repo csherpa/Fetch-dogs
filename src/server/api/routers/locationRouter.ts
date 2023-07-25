@@ -19,7 +19,6 @@ export const locationRouter = createTRPCRouter({
           Cookie: `fetch-access-token=${ctx.cookie}`,
         },
       });
-      console.log(res.data);
       return { data: res.data };
     }),
 });

@@ -1,22 +1,14 @@
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-
-  const current = new URLSearchParams(searchParams.toString());
-
-  current.set("from", "0");
-  current.set("size", "20");
-
   const login = api.auth.login.useMutation();
 
   const handleLogin = () => {
     login.mutate({ name: "blah", email: "blah@blah.com" });
-    void router.push(`dogs/search?${current.toString()}`);
+    void router.push(`dogs/search`);
   };
 
   return (

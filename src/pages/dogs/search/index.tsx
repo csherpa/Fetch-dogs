@@ -18,17 +18,17 @@ const DogsPage: NextPage = () => {
 
   const current = new URLSearchParams(searchParams.toString());
 
-  const [size, setSize] = useState(20);
-
-  const [from, setFrom] = useState(0);
-
-  const [sortValue, setSortValue] = useState("Breed");
-
   const getparams = searchParams.get("breeds") ?? "";
 
   const selectedFilters = getparams
     .split("_")
     .filter((val: string) => val != "");
+
+  const getSize = searchParams.get("size") ?? "20";
+
+  const getFrom = searchParams.get("from") ?? "0";
+
+  const getSortBy = searchParams.get("sortBy") ?? "breed";
 
   const clearSelectedFilters = () => {
     current.delete("breeds");
@@ -44,28 +44,21 @@ const DogsPage: NextPage = () => {
 
   const searchDogs = api.dogs.searchDogs.useQuery({
     breeds: selectedFilters,
-    from: from,
-    size: size,
+    from: Number(getFrom),
+    size: Number(getSize),
   }).data?.dogObj as unknown as Dog[];
 
   const handleSortChange = (value: string) => {
-    setSortValue(value);
-    switch (value) {
-      case "age":
-        searchDogs.sort((a, b) => a.age - b.age);
-        break;
-      case "name":
-        searchDogs.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "zip_code":
-        searchDogs.sort((a, b) => a.zip_code.localeCompare(b.zip_code));
-        break;
-      default:
-        searchDogs.sort((a, b) => a.breed.localeCompare(b.breed));
-    }
     current.set("sortBy", value);
     const sortUrl = `${router.pathname}?${current.toString()}`;
     void router.push(sortUrl, undefined, { shallow: true });
+  };
+
+  const handleSelectChange = (value: number) => {
+    const selectedSize = Number(value);
+    current.set("size", selectedSize.toString());
+    const sizeQueryUrl = `${router.pathname}?${current.toString()}`;
+    void router.push(sizeQueryUrl, undefined, { shallow: true });
   };
 
   return (
@@ -90,8 +83,11 @@ const DogsPage: NextPage = () => {
                 selectedFilters={selectedFilters}
                 onHandleChange={onHandleChange}
               />
-              <SizeDropdown size={size} setSize={setSize} current={current} />
-
+              <SizeDropdown
+                getSize={getSize}
+                handleSelectChange={handleSelectChange}
+                current={current}
+              />
               <LogoutButton />
             </div>
 
@@ -104,7 +100,8 @@ const DogsPage: NextPage = () => {
                   Clear Breeds
                 </button>
                 <Sort
-                  sortValue={sortValue}
+                  getSorBy={getSortBy}
+                  searchDogs={searchDogs}
                   handleSortChange={handleSortChange}
                 />
               </div>
@@ -112,9 +109,8 @@ const DogsPage: NextPage = () => {
                 selectedFilters={selectedFilters}
                 searchDogs={searchDogs}
                 current={current}
-                size={size}
-                from={from}
-                setFrom={setFrom}
+                getSize={getSize}
+                getFrom={getFrom}
               />
             </div>
           </main>

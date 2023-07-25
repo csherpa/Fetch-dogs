@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 const DogMatchPage: NextPage = () => {
   return (
     <>
@@ -9,6 +10,11 @@ const DogMatchPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+        <Link href={"/dogs/search"}>
+          <button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">
+            Home
+          </button>
+        </Link>
         <h1 className="text-white">
           {" "}
           this the page where the matchDog and with dog component will be
