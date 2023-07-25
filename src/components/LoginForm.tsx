@@ -14,7 +14,7 @@ const LoginForm: React.FC = ({}) => {
   return (
     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
       <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-        <span className="text-[hsl(280,100%,70%)]">T3</span> Dogs
+        <span className="text-[hsl(280,100%,70%)]">Fetch</span> Dogs
       </h1>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

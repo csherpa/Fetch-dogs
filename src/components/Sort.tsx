@@ -37,7 +37,7 @@ const Sort: React.FC<SortProps> = ({
     <>
       <div>
         <Listbox value={getSorBy} onChange={handleSortChange}>
-          <Listbox.Button className="mt-6 flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">
+          <Listbox.Button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">
             Sort by: {`${getSorBy.charAt(0).toUpperCase() + getSorBy.slice(1)}`}
             <span>
               <svg
