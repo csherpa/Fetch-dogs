@@ -5,7 +5,7 @@ import DogResults from "~/components/DogResults";
 import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SizeDropdown from "~/components/sizeDropdown";
 import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
@@ -48,6 +48,30 @@ const DogsPage: NextPage = () => {
     size: Number(getSize),
   }).data?.dogObj as unknown as Dog[];
 
+  const findMatch = api.dogs.searchDogs.useQuery({
+    breeds: selectedFilters,
+    from: Number(getFrom),
+    size: Number(getSize),
+  }).data?.match;
+
+  const handleSendData = () => {
+    if (searchDogs) {
+      const matchedDog = searchDogs.find(
+        (dogObj) => dogObj.id === findMatch?.match
+      );
+      void router.push({
+        pathname: "match",
+        query: {
+          name: matchedDog?.name,
+          breed: matchedDog?.breed,
+          age: matchedDog?.age,
+          zip_code: matchedDog?.zip_code,
+          img: matchedDog?.img,
+        },
+      });
+    }
+  };
+
   const handleSortChange = (value: string) => {
     current.set("sortBy", value.replace(/ /g, "_"));
     const sortUrl = `${router.pathname}?${current.toString()}`;
@@ -82,6 +106,7 @@ const DogsPage: NextPage = () => {
               <Search
                 selectedFilters={selectedFilters}
                 onHandleChange={onHandleChange}
+                handleSendData={handleSendData}
               />
               <SizeDropdown
                 getSize={getSize}

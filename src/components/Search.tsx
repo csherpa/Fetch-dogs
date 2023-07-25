@@ -1,14 +1,20 @@
 import { Listbox } from "@headlessui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { api } from "~/utils/api";
 
 interface SearchProps {
   selectedFilters: string[];
   onHandleChange: (selectedFilter: string[]) => void;
+  handleSendData: () => void;
 }
 
-const Search: React.FC<SearchProps> = ({ selectedFilters, onHandleChange }) => {
+const Search: React.FC<SearchProps> = ({
+  selectedFilters,
+  onHandleChange,
+  handleSendData,
+}) => {
   const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breeds as string[];
   return (
     <>
@@ -50,8 +56,11 @@ const Search: React.FC<SearchProps> = ({ selectedFilters, onHandleChange }) => {
           </Listbox.Options>
         </Listbox>
       </div>
-      <Link href={"/dogs/match"}>
-        <button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <Link href={`match`}>
+        <button
+          onClick={handleSendData}
+          className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
           Match with a Dog
         </button>
       </Link>
