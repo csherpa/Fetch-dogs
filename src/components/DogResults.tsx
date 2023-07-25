@@ -2,7 +2,6 @@ import { type Dog } from "~/server/api/models/dogs";
 import DogCard from "./DogCard";
 import TablePagination from "./Pagination";
 import { useRouter } from "next/dist/client/router";
-import { api } from "~/utils/api";
 
 interface DogResultsProps {
   selectedFilters: string[];

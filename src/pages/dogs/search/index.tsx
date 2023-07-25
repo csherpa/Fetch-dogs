@@ -5,7 +5,6 @@ import DogResults from "~/components/DogResults";
 import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import SizeDropdown from "~/components/sizeDropdown";
 import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
@@ -38,7 +37,7 @@ const DogsPage: NextPage = () => {
   };
 
   const onHandleChange = (selectedFilters: string[]) => {
-    current.set("breeds", selectedFilters.join("_").replace(/ /g, "_"));
+    current.set("breeds", selectedFilters.join("_"));
     const newUrl = `${router.pathname}?${current.toString()}`;
     void router.push(newUrl, undefined, { shallow: true });
   };
