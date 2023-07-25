@@ -1,10 +1,16 @@
 import { useRouter } from "next/dist/client/router";
+import { api } from "~/utils/api";
 
 const LogoutButton: React.FC = () => {
   const router = useRouter();
+
+  const logout = api.auth.logout.useMutation();
+
   const handleLogout = () => {
+    logout.mutate();
     void router.push("/login");
   };
+
   return (
     <section>
       <button

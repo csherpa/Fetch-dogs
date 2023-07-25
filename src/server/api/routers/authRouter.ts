@@ -20,4 +20,11 @@ export const authRouter = createTRPCRouter({
 
       return { data: res.data };
     }),
+  logout: publicProcedure.mutation(({ ctx }) => {
+    ctx.res.setHeader(
+      "Set-Cookie",
+      "fetch-access-token=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Strict"
+    );
+    return { success: true, message: "Logged out successfully" };
+  }),
 });
