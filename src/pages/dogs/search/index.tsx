@@ -6,7 +6,7 @@ import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import SizeDropdown from "~/components/sizeDropDown";
+import SizeDropdown from "~/components/sizeDropdown";
 import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
 import { type Dog } from "~/server/api/models/dogs";
@@ -28,7 +28,7 @@ const DogsPage: NextPage = () => {
 
   const getFrom = searchParams.get("from") ?? "0";
 
-  const getSortBy = searchParams.get("sortBy") ?? "breed";
+  const getSortBy = searchParams.get("sortBy") ?? "Breed";
 
   const clearSelectedFilters = () => {
     current.delete("breeds");
@@ -37,7 +37,7 @@ const DogsPage: NextPage = () => {
   };
 
   const onHandleChange = (selectedFilters: string[]) => {
-    current.set("breeds", selectedFilters.join("_"));
+    current.set("breeds", selectedFilters.join("_").replace(/ /g, "_"));
     const newUrl = `${router.pathname}?${current.toString()}`;
     void router.push(newUrl, undefined, { shallow: true });
   };
@@ -49,7 +49,7 @@ const DogsPage: NextPage = () => {
   }).data?.dogObj as unknown as Dog[];
 
   const handleSortChange = (value: string) => {
-    current.set("sortBy", value);
+    current.set("sortBy", value.replace(/ /g, "_"));
     const sortUrl = `${router.pathname}?${current.toString()}`;
     void router.push(sortUrl, undefined, { shallow: true });
   };

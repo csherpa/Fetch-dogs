@@ -22,11 +22,7 @@ const DogResults: React.FC<DogResultsProps> = ({
   const from = Number(getFrom);
 
   const router = useRouter();
-  const findMatch = api.dogs.searchDogs.useQuery({
-    breeds: selectedFilters,
-    from: from,
-    size: size,
-  }).data?.match;
+
   const loadNextPage = () => {
     const nextDogs = size + from;
     current.set("from", nextDogs.toString());
