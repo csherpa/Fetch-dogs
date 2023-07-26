@@ -5,14 +5,9 @@ import { api } from "~/utils/api";
 interface SearchProps {
   selectedFilters: string[];
   onHandleChange: (selectedFilter: string[]) => void;
-  handleSendData: () => void;
 }
 
-const Search: React.FC<SearchProps> = ({
-  selectedFilters,
-  onHandleChange,
-  handleSendData,
-}) => {
+const Search: React.FC<SearchProps> = ({ selectedFilters, onHandleChange }) => {
   const getDogBreeds = api.dogs.breeds.useQuery()?.data?.breeds as string[];
   return (
     <>

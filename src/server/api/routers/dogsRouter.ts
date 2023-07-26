@@ -47,7 +47,6 @@ export const dogsRouter = createTRPCRouter({
       const dogObj = await axios({
         method: "post",
         url: `${basePath}/dogs`,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         data: res.data.resultIds,
         headers: {
           Cookie: `fetch-access-token=${ctx.cookie}`,
@@ -57,7 +56,6 @@ export const dogsRouter = createTRPCRouter({
       const matchDog = await axios({
         method: "post",
         url: `${basePath}/dogs/match`,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         data: res.data.resultIds,
         headers: {
           Cookie: `fetch-access-token=${ctx.cookie}`,

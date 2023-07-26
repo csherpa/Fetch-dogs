@@ -10,6 +10,7 @@ import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
 import { type Dog } from "~/server/api/models/dogs";
 import Link from "next/link";
+import { useDataContext } from "dataContext";
 
 const DogsPage: NextPage = () => {
   const router = useRouter();
@@ -54,23 +55,14 @@ const DogsPage: NextPage = () => {
     size: Number(getSize),
   }).data?.match;
 
-  const handleSendData = () => {
-    if (searchDogs) {
-      const matchedDog = searchDogs.find(
-        (dogObj) => dogObj.id === findMatch?.match
-      );
-      void router.push({
-        pathname: "match",
-        query: {
-          name: matchedDog?.name,
-          breed: matchedDog?.breed,
-          age: matchedDog?.age,
-          zip_code: matchedDog?.zip_code,
-          img: matchedDog?.img,
-        },
-      });
-    }
-  };
+  const { setData } = useDataContext();
+
+  if (searchDogs) {
+    const matchedDog = searchDogs.find(
+      (dogObj) => dogObj.id === findMatch?.match
+    );
+    setData(matchedDog);
+  }
 
   const handleSortChange = (value: string) => {
     current.set("sortBy", value.replace(/ /g, "_"));
@@ -106,7 +98,6 @@ const DogsPage: NextPage = () => {
               <Search
                 selectedFilters={selectedFilters}
                 onHandleChange={onHandleChange}
-                handleSendData={handleSendData}
               />
               <SizeDropdown
                 getSize={getSize}
@@ -123,11 +114,8 @@ const DogsPage: NextPage = () => {
             </div>
             <div>
               <div className="mt-10 flex  gap-3">
-                <Link href={`match`}>
-                  <button
-                    onClick={handleSendData}
-                    className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
+                <Link href={`/dogs/match`}>
+                  <button className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     Match with a Dog
                   </button>
                 </Link>
