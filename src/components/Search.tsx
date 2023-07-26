@@ -1,5 +1,4 @@
 import { Listbox } from "@headlessui/react";
-import { Fragment } from "react";
 import { api } from "~/utils/api";
 
 interface SearchProps {
@@ -30,7 +29,7 @@ const Search: React.FC<SearchProps> = ({ selectedFilters, onHandleChange }) => {
           <Listbox.Options className="w-50 absolute z-10 mr-80 mt-2 cursor-pointer rounded border border-gray-300 bg-white py-2 shadow-lg">
             <div className="max-h-80 overflow-y-scroll ">
               {getDogBreeds?.map((breed: string) => (
-                <Listbox.Option key={breed} value={breed} as={Fragment}>
+                <Listbox.Option key={breed} value={breed}>
                   {({ active, selected }) => (
                     <li
                       className={`relative cursor-pointer select-none px-4 py-2 ${
