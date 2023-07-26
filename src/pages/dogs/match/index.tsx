@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import DogCard from "~/components/DogCard";
-import { Dog } from "~/server/api/models/dogs";
+import { type Dog } from "~/server/api/models/dogs";
 
 const DogMatchPage: NextPage = () => {
   const { data } = useDataContext();
@@ -14,7 +14,7 @@ const DogMatchPage: NextPage = () => {
     if (data) {
       setMatchDog(data);
     }
-  });
+  }, [data]);
 
   return (
     <>
