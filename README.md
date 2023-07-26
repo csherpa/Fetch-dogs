@@ -33,4 +33,4 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 - [tRPC](https://trpc.io)
 
 ## Deploy
-- https://take-home-awj2w46f4-csherpa.vercel.app/
+- https://fetch-dogs-taupe.vercel.app/
