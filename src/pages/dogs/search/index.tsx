@@ -94,7 +94,7 @@ const DogsPage: NextPage = () => {
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-            <div className="mt-10 flex justify-between gap-3 px-24">
+            <div className="mt-10 flex flex-col justify-between gap-3 px-24 md:flex md:flex-row">
               <Search
                 selectedFilters={selectedFilters}
                 onHandleChange={onHandleChange}
