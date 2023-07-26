@@ -5,12 +5,13 @@ import DogResults from "~/components/DogResults";
 import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
-import SizeDropdown from "~/components/SizeDropdown";
+import SizeSize from "~/components/SizeSort";
 import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
 import { type Dog } from "~/server/api/models/dogs";
 import Link from "next/link";
 import { useDataContext } from "dataContext";
+import SizeSort from "~/components/SizeSort";
 
 const DogsPage: NextPage = () => {
   const router = useRouter();
@@ -99,7 +100,7 @@ const DogsPage: NextPage = () => {
                 selectedFilters={selectedFilters}
                 onHandleChange={onHandleChange}
               />
-              <SizeDropdown
+              <SizeSort
                 getSize={getSize}
                 handleSelectChange={handleSelectChange}
                 current={current}

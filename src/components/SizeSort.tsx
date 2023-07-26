@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 
-interface SizeDropdownProps {
+interface SizeSortProps {
   current: URLSearchParams;
   getSize: string;
   handleSelectChange: (value: number) => void;
@@ -12,10 +12,7 @@ const sizeOptions = [
   { value: "40", label: "40" },
 ];
 
-const SizeDropdown: React.FC<SizeDropdownProps> = ({
-  handleSelectChange,
-  getSize,
-}) => {
+const SizeSort: React.FC<SizeSortProps> = ({ handleSelectChange, getSize }) => {
   const size = Number(getSize);
 
   return (
@@ -58,4 +55,4 @@ const SizeDropdown: React.FC<SizeDropdownProps> = ({
   );
 };
 
-export default SizeDropdown;
+export default SizeSort;
