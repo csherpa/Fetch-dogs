@@ -16,15 +16,15 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ### General Requirements
 
-- Authentication: Users should enter their name and email on the login screen. This information will be used to authenticate with the backend service through the login endpoint.
-- Search Page: Once authenticated, users should be brought to a search page where they can browse available dogs. The search page should have the following features:
+1) Authentication: Users should enter their name and email on the login screen. This information will be used to authenticate with the backend service through the login endpoint.
+2) Search Page: Once authenticated, users should be brought to a search page where they can browse available dogs. The search page should have the following features:
 
-* Filter by breed
-* Pagination for search results
-* Default sorting alphabetically by breed, with the option to change sort order
-* Display all fields of the Dog object (except for id)
-* Ability to select favorite dogs from the search results
-* Ability to generate a match from the search dog results
+  * Filter by breed
+  * Pagination for search results
+  * Default sorting alphabetically by breed, with the option to change sort order
+  * Display all fields of the Dog object (except for id)
+  * Ability to select favorite dogs from the search results
+  * Ability to generate a match from the search dog results
 
 ### Technologies Used
 
