@@ -5,7 +5,7 @@ import DogResults from "~/components/DogResults";
 import LogoutButton from "~/components/LogoutButton";
 import Search from "~/components/Search";
 import { useSearchParams } from "next/navigation";
-import SizeDropdown from "~/components/sizeDropdown";
+import SizeDropdown from "~/components/SizeDropdown";
 import Sort from "~/components/Sort";
 import { api } from "~/utils/api";
 import { type Dog } from "~/server/api/models/dogs";
