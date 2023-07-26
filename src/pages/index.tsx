@@ -1,7 +1,8 @@
 import { type NextPage } from "next";
+import LoginPage from "./login";
 
 const NextPage: NextPage = () => {
-  return <div></div>;
+  return <LoginPage />;
 };
 
 export default NextPage;
