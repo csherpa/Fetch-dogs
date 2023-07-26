@@ -11,7 +11,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ### Usage
 
-- Run `npm run dev` to start the application.
+- Run `npm start` to start the application.
 - Connect to the server on http://localhost:3000
 
 ### General Requirements
