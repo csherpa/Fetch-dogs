@@ -6,7 +6,7 @@ This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3
 
 ### Installation Guide
 
-- Need Node updated to verison 16
+- Node-version >= 16
 - Clone the repository onto your machine
 - Run `npm install` to install all dependencies
 
