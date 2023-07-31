@@ -12,6 +12,7 @@ import { type Dog } from "~/server/api/models/dogs";
 import Link from "next/link";
 import { useDataContext } from "dataContext";
 import SizeSort from "~/components/SizeSort";
+import BreedFilters from "~/components/BreedFilters";
 
 const DogsPage: NextPage = () => {
   const router = useRouter();
@@ -127,6 +128,7 @@ const DogsPage: NextPage = () => {
                   Clear Breeds
                 </button>
               </div>
+              <BreedFilters />
               <DogResults
                 selectedFilters={selectedFilters}
                 searchDogs={searchDogs}
