@@ -9,9 +9,20 @@ const LoginForm: React.FC = ({}) => {
 
   const [email, setEmail] = useState("" as string);
 
+  const [emailError, setEmailError] = useState("" as string);
+
   const login = api.auth.login.useMutation();
 
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLogin = () => {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email address");
+      return;
+    }
     if (name && email) {
       login.mutate({ name: name, email: email });
       void router.push(`dogs/search`);
@@ -72,6 +83,7 @@ const LoginForm: React.FC = ({}) => {
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {emailError && <p className="text-red-500">{emailError}</p>}
               </div>
             </div>
 
