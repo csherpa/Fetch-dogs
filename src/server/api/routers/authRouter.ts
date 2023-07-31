@@ -4,7 +4,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const authRouter = createTRPCRouter({
   login: publicProcedure
-    .input(z.object({ name: z.string(), email: z.string() }))
+    .input(z.object({ name: z.string(), email: z.string().email() }))
     .mutation(async ({ input, ctx }) => {
       const res: AxiosResponse<Response> = await axios({
         method: "post",
