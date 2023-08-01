@@ -28,7 +28,7 @@ const BreedFilters: React.FC<BreedFiltersProps> = ({}) => {
   useEffect(getBreedFilter, [router.query]);
 
   return (
-    <div className="my-4 flex flex-row flex-wrap">
+    <div className="my-4 flex cursor-pointer flex-row flex-wrap">
       {activeFilters.map((filter: SingleBreedFilter) => {
         return (
           <div
