@@ -1,6 +1,6 @@
 # Project Overview
 
-Welcome to Fetch Dogs! This is a website that allows dog lovers to search through a database of shelter dogs and find a lucky dog a new home. As a user, you will be able to filter, sort, and browse available dogs. Additionally, users can select their favorite dog breeds from the search results and generate a match.
+Welcome to PawfectPals! This is a website that allows dog lovers to search through a database of shelter dogs and find a lucky dog a new home. As a user, you will be able to filter, sort, and browse available dogs. Additionally, users can select their favorite dog breeds from the search results and generate a match.
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
