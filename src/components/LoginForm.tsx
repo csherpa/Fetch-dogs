@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { isValidEmail } from "hooks/validateEmail";
 import { api } from "~/utils/api";
 
 const LoginForm: React.FC = ({}) => {
@@ -12,11 +13,6 @@ const LoginForm: React.FC = ({}) => {
   const [emailError, setEmailError] = useState("" as string);
 
   const login = api.auth.login.useMutation();
-
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const handleLogin = () => {
     if (!isValidEmail(email)) {
