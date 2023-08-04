@@ -13,7 +13,7 @@ import { authRouter } from "~/server/api/routers/authRouter";
 // });
 
 // Test case for successful login
-test("Successful login", async () => {
+test("Dogs Routes", async () => {
   const loginData = {
     name: "testname",
     email: "testemail",
