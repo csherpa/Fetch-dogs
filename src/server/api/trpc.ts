@@ -22,10 +22,10 @@ import { ZodError } from "zod";
  */
 
 // type CreateContextOptions = Record<string, any>;
-type CreateContextOptions = {
-  res: NextApiResponse;
-  req: NextApiRequest;
-};
+// type CreateContextOptions = {
+//   res: NextApiResponse;
+//   req: NextApiRequest;
+// };
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -37,16 +37,16 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  console.log({ sup: _opts.req.cookies });
-  // console.log({ req: _opts.req, res: _opts.res });
-  // return { _opts };
-  return {
-    req: _opts.req,
-    res: _opts.res,
-    cookie: _opts.req.cookies,
-  };
-};
+// export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
+//   // console.log({ sup: _opts.req.cookies });
+//   // console.log({ req: _opts.req, res: _opts.res });
+//   // return { _opts };
+//   return {
+//     req: _opts.req,
+//     res: _opts.res,
+//     cookie: _opts.req.cookies,
+//   };
+// };
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -56,11 +56,12 @@ export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
   // return createInnerTRPCContext(_opts);
-  const contextInner = createInnerTRPCContext(_opts);
-  return { ...contextInner, req: _opts.req, res: _opts.res };
+  // const contextInner = createInnerTRPCContext(_opts);
+  // return { ...contextInner, req: _opts.req, res: _opts.res };
+  return { req: _opts.req, res: _opts.res };
 };
 
-export type Context = inferAsyncReturnType<typeof createInnerTRPCContext>;
+// export type Context = inferAsyncReturnType<typeof createInnerTRPCContext>;
 
 /**
  * 2. INITIALIZATION

@@ -1,29 +1,20 @@
-// import { NextApiRequest, NextApiResponse } from "next";
+import axios, { AxiosResponse } from "axios";
+import { test, expect } from "@jest/globals";
 
-import { authRouter } from "~/server/api/routers/authRouter";
+// Mock the axios requests for testing
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-// it("should", () => {
-//   expect(1).toBe(1);
-// });
+describe("Authentication", () => {
+  test("check if the user has successfully logged in", () => {
+    const mockResponse = {
+      data: {},
+      status: 200,
+      statusText: "ok",
+    } as AxiosResponse;
+    mockedAxios.get.mockResolvedValue(mockResponse);
 
-// describe("API routes testing", () => {
-//   it("GET", async () => {
-//     console.log(dogsRouter);
-//   });
-// });
-
-// Test case for successful login
-test("Dogs Routes", async () => {
-  const loginData = {
-    name: "testname",
-    email: "testemail",
-  };
-
-  // // Call the loginHandler function
-  const response = await authRouter;
-  console.log({ response });
-
-  // Assert the response, e.g., check if the response contains the expected data
-  // expect(response).toHaveProperty("token");
-  // expect(response).toHaveProperty("userId");
+    // expect(mockedAxios).toHaveBeenCalledTimes(1);
+    // expect(response).toEqual({ data: {}, status: 200, statusText: "ok" });
+  });
 });
