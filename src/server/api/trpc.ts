@@ -7,8 +7,9 @@
  * need to use are documented accordingly near the end.
  */
 
-import { TRPCError, initTRPC } from "@trpc/server";
+import { TRPCError, inferAsyncReturnType, initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { NextApiRequest, NextApiResponse } from "next";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -20,7 +21,12 @@ import { ZodError } from "zod";
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-// type CreateContextOptions = Record<string, never>;
+// type CreateContextOptions = Record<string, any>;
+type CreateContextOptions = {
+  res: NextApiResponse;
+  req: NextApiRequest;
+};
+
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
  * it from here.
@@ -31,10 +37,16 @@ import { ZodError } from "zod";
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-// const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-//   console.log({ sup: _opts });
-//   return { resHeaders: _opts[resSym].setHeader };
-// };
+export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
+  console.log({ sup: _opts.req.cookies });
+  // console.log({ req: _opts.req, res: _opts.res });
+  // return { _opts };
+  return {
+    req: _opts.req,
+    res: _opts.res,
+    cookie: _opts.req.cookies,
+  };
+};
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -43,10 +55,12 @@ import { ZodError } from "zod";
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  // console.log({ _opts });
-  // return createInnerTRPCContext({ [resSym]: _opts.res });
-  return { req: _opts.req, res: _opts.res };
+  // return createInnerTRPCContext(_opts);
+  const contextInner = createInnerTRPCContext(_opts);
+  return { ...contextInner, req: _opts.req, res: _opts.res };
 };
+
+export type Context = inferAsyncReturnType<typeof createInnerTRPCContext>;
 
 /**
  * 2. INITIALIZATION

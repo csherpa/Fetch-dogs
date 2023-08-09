@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { type Dog } from "~/server/api/models/dogs";
 
 interface DogCardProps {
