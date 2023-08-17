@@ -6,9 +6,13 @@ type SingleBreedFilter = {
   paramLabel: string;
 };
 
-interface BreedFiltersProps {}
+interface BreedFiltersProps {
+  clearSelectedFilters: () => void;
+}
 
-const BreedFilters: React.FC<BreedFiltersProps> = ({}) => {
+const BreedFilters: React.FC<BreedFiltersProps> = ({
+  clearSelectedFilters,
+}) => {
   const router = useRouter();
   const [activeFilters, setActiveFilters] = useState([] as SingleBreedFilter[]);
 
@@ -41,6 +45,16 @@ const BreedFilters: React.FC<BreedFiltersProps> = ({}) => {
           </div>
         );
       })}
+      {activeFilters.length > 0 ? (
+        <button
+          className="font-base text-md ml-3.5 p-1.5 font-semibold text-[#E3E3E3]"
+          onClick={clearSelectedFilters}
+        >
+          Clear All
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
